@@ -18,5 +18,9 @@ permissionset 50101 GeneratedPermission
         codeunit "Backup JSON ABI" = X,
         codeunit "Backup XML ABI" = X,
         codeunit "Backup XLSX ABI" = X,
-        codeunit "Backup XML2 ABI" = X;
+        codeunit "Backup XML2 ABI" = X,
+        codeunit "Excel Helper ABI" = X,
+        codeunit SendStreamToBrowser = X,
+        codeunit SendStreamToEmail = X,
+        codeunit SendStreamToHTTP = X;
 }
