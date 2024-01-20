@@ -1,0 +1,59 @@
+{
+    "name": "ABI ruleset",
+    "description": "these rules must be respected by all the AL code written for this company",
+    "rules": [
+        {
+            "id": "AA0008",
+            "action": "Error",
+            "justification": "Function calls should have parenthesis even if they do not have any parameters."
+        },
+        {
+            "id": "AA0073",
+            "action":"Error",
+            "justification": "The name of temporary variable must be prefixed with Temp."
+        },
+        {
+            "id": "AA0137",
+            "action":"Error",
+            "justification": "Do not declare variables that are unused."
+        },
+        {
+            "id": "AA0139",
+            "action":"Error",
+            "justification": "Do not assign a text to a target with smaller size."
+        },
+        {
+            "id": "AA0198",
+            "action":"Hidden",
+            "justification": "Do not use identical names for local and global variables"
+        },
+        {
+            "id": "AA0206",
+            "action":"Warning",
+            "justification": "The value assigned to a variable must be used."
+        },
+        {
+            "id": "AA0217",
+            "action":"Error",
+            "justification": "Use a text constant or label for format string in StrSubstNo."
+        }
+        ,
+        {
+            "id": "AA0233",
+            "action":"Error",
+            "justification": "Use Get(), FindFirst() and FindLast() without Next() method."
+        }
+        ,
+        {
+            "id": "AL0604",
+            "action":"Warning",
+            "justification": "Use of implicit ‘with’"
+        }
+        ,
+        {
+            "id": "AL0606",
+            "action":"Error",
+            "justification": "The 'with' statement is deprecated and will be removed for cloud development in a future release."
+        }
+    ]
+}

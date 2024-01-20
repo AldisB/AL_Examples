@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "Movie Database"
+		},
+		{
+			"path": "Azure Blob"
 		}
 	],
 	"settings": {}
