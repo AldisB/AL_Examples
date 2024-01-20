@@ -1,7 +1,8 @@
 codeunit 50110 SendStreamToHTTP implements SendStream
 {
-    internal procedure SendStream(FileName: Text; var TempBlob: Codeunit System.Utilities."Temp Blob")
+    internal procedure SendStream(FileName: Text; TempExcelBuffer: Record "Excel Buffer" temporary)
     var
+        TempBlob: Codeunit "Temp Blob";
         ExcelHttpClient: HttpClient;
         ExcelHttpResponseMessage: HttpResponseMessage;
         ExcelHttpContent: HttpContent;

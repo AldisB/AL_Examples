@@ -4,13 +4,13 @@ codeunit 50107 "Excel Helper ABI"
     Access = Internal;
     SingleInstance = true;
 
-    procedure ExportAllUserRecordsToExcel()
+    procedure ExportAllUserRecordsToExcel(SendStreamTo: Enum SendStreamTo)
     var
         TempExcelBuffer: Record "Excel Buffer" temporary;
     begin
         CreateExcelHeaders(TempExcelBuffer);
         ExportAllUserRecordsToExcel(TempExcelBuffer);
-        CloseExcelFile('Users', TempExcelBuffer);
+        CloseExcelFile(SendStreamTo, 'Users', TempExcelBuffer);
     end;
 
     local procedure ExportAllUserRecordsToExcel(var TempExcelBuffer: Record "Excel Buffer" temporary)
@@ -63,12 +63,15 @@ codeunit 50107 "Excel Helper ABI"
         TempExcelBuffer.AddColumn(VariantValue, false, '', IsBold, false, false, '', CellType);
     end;
 
-    local procedure CloseExcelFile(Name: Text[250]; var TempExcelBuffer: Record "Excel Buffer" temporary)
+    local procedure CloseExcelFile(SendStreamTo: Enum SendStreamTo; Name: Text[250]; var TempExcelBuffer: Record "Excel Buffer" temporary)
     var
+        ISendStream: Interface SendStream;
         FileNameTok: Label 'Business Central Booster %1', Locked = true, Comment = '%1 = Name of the set';
         FileNameWithExtensionTok: Label 'Business Central Booster %1.xlsx', Locked = true;
         FileName: Text;
     begin
+        ISendStream := SendStreamTo;
+
         TempExcelBuffer.CreateNewBook(Name);
         TempExcelBuffer.WriteSheet(Name, CompanyName, UserId());
         TempExcelBuffer.CloseBook();
@@ -79,7 +82,7 @@ codeunit 50107 "Excel Helper ABI"
 
         // Use SaveToStream if you want to save the file to an OutStream and then do something with it
         FileName := StrSubstNo(FileNameWithExtensionTok, Name);
-        SaveToStream(FileName, TempExcelBuffer);
+        ISendStream.SendStream(FileName, TempExcelBuffer);
     end;
 
     local procedure DirectDownload(FileName: Text; var TempExcelBuffer: Record "Excel Buffer" temporary)
@@ -88,47 +91,11 @@ codeunit 50107 "Excel Helper ABI"
         TempExcelBuffer.OpenExcel();
     end;
 
-    local procedure SaveToStream(FileName: Text; var TempExcelBuffer: Record "Excel Buffer" temporary)
-    var
-        TempBlob: Codeunit "Temp Blob";
-        SendStream: Interface SendStream;
-        ExcelOutStream: OutStream;
-    begin
-        TempBlob.CreateOutStream(ExcelOutStream);
-        TempExcelBuffer.SaveToStream(ExcelOutStream, true);
-
-        case SendStreamTo of
-            SendStreamTo::DownloadToUsersBrowser:
-                begin
-                    SendStream := SendStreamTo::DownloadToUsersBrowser;
-                    SendStream.SendStream(FileName, TempBlob);
-                end;
-            SendStreamTo::SendAsEmail:
-                begin
-                    SendStream := SendStreamTo::SendAsEmail;
-                    SendStream.SendStream(FileName, TempBlob);
-                end;
-            SendStreamTo::SendAsHttp:
-                begin
-                    SendStream := SendStreamTo::SendAsHttp;
-                    SendStream.SendStream(FileName, TempBlob);
-                end;
-        end;
-    end;
-
-    internal procedure SetSendStreamTo(SendStreamToValue: Enum SendStreamTo)
-    begin
-        SendStreamTo := SendStreamToValue;
-    end;
-
     internal procedure GetContentType(FileName: Text): Text
     var
         FileManagement: Codeunit "File Management";
     begin
         exit(FileManagement.GetFileNameMimeType(FileName));
     end;
-
-    var
-        SendStreamTo: Enum SendStreamTo;
 }
 

@@ -1,4 +1,4 @@
 interface SendStream
 {
-    procedure SendStream(FileName: Text; var TempBlob: Codeunit "Temp Blob")
+    procedure SendStream(FileName: Text; TempExcelBuffer: Record "Excel Buffer" temporary)
 }

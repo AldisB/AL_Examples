@@ -1,7 +1,8 @@
 codeunit 50109 SendStreamToEmail implements SendStream
 {
-    internal procedure SendStream(FileName: Text; var TempBlob: Codeunit System.Utilities."Temp Blob")
+    internal procedure SendStream(FileName: Text; TempExcelBuffer: Record "Excel Buffer" temporary)
     var
+        TempBlob: Codeunit "Temp Blob";
         EmailMessage: Codeunit "Email Message";
         Email: Codeunit Email;
         ExcelHelper: Codeunit "Excel Helper ABI";
