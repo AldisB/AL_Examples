@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "Azure Blob"
+		},
+		{
+			"path": "Data Compression"
 		}
 	],
 	"settings": {}
