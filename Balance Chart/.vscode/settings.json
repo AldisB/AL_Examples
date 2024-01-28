@@ -1,0 +1,16 @@
+{
+    "al.assemblyProbingPaths":  [
+        "./.netpackages",
+        "C:\\DLLs\\BC21CU04\\.netPackages"
+    ],
+    "al.enableCodeAnalysis": true,
+    "al.codeAnalyzers": [
+        "${CodeCop}",
+        "${UICop}",
+        "${PerTenantExtensionCop}",
+        "${analyzerFolder}BusinessCentral.LinterCop.dll"
+    ],
+    "al.ruleSetPath": "./al.ruleset.json",
+    "al.enableExternalRulesets": true
+
+}
